@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BD_FARMACIA" Class="BD_FARMACIASQLDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=BD_FARMACIA;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BD_FARMACIAConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.MEDICAMENTO" Member="MEDICAMENTO">
+    <Type Name="MEDICAMENTO">
+      <Column Name="ID_MED" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_ADV" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_FOR" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_PRE" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_LAB" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_SIN" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOM_MED" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="CON_MED" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="MEDICAMENTO_MEDICAMENTO_FARMACIA" Member="MEDICAMENTO_FARMACIA" ThisKey="ID_MED" OtherKey="ID_MED" Type="MEDICAMENTO_FARMACIA" />
+      <Association Name="MEDICAMENTO_PROMOCION" Member="PROMOCION" ThisKey="ID_MED" OtherKey="ID_MED" Type="PROMOCION" />
+      <Association Name="MEDICAMENTO_FAVORITO" Member="FAVORITO" ThisKey="ID_MED" OtherKey="ID_MED" Type="FAVORITO" />
+      <Association Name="LABORATORIO_MEDICAMENTO" Member="LABORATORIO" ThisKey="ID_LAB" OtherKey="ID_LAB" Type="LABORATORIO" IsForeignKey="true" />
+      <Association Name="PRESENTACION_MEDICAMENTO" Member="PRESENTACION" ThisKey="ID_PRE" OtherKey="ID_PRE" Type="PRESENTACION" IsForeignKey="true" />
+      <Association Name="SINTOMA_MEDICAMENTO" Member="SINTOMA" ThisKey="ID_SIN" OtherKey="ID_SIN" Type="SINTOMA" IsForeignKey="true" />
+      <Association Name="ADVERTENCIA_MEDICAMENTO" Member="ADVERTENCIA" ThisKey="ID_ADV" OtherKey="ID_ADV" Type="ADVERTENCIA" IsForeignKey="true" />
+      <Association Name="FORMA_USO_MEDICAMENTO" Member="FORMA_USO" ThisKey="ID_FOR" OtherKey="ID_FOR" Type="FORMA_USO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LABORATORIO" Member="LABORATORIO">
+    <Type Name="LABORATORIO">
+      <Column Name="ID_LAB" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOM_LAB" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Association Name="LABORATORIO_MEDICAMENTO" Member="MEDICAMENTO" ThisKey="ID_LAB" OtherKey="ID_LAB" Type="MEDICAMENTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MEDICAMENTO_FARMACIA" Member="MEDICAMENTO_FARMACIA">
+    <Type Name="MEDICAMENTO_FARMACIA">
+      <Column Name="ID_MED" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_FAR" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PRECIO" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Association Name="MEDICAMENTO_MEDICAMENTO_FARMACIA" Member="MEDICAMENTO" ThisKey="ID_MED" OtherKey="ID_MED" Type="MEDICAMENTO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERSONA" Member="PERSONA">
+    <Type Name="PERSONA">
+      <Column Name="PER_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_USU" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NOM_PER" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="APEP_PER" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="APEM_PER" Type="System.String" DbType="NVarChar(60) NOT NULL" CanBeNull="false" />
+      <Column Name="FNAC_PER" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="USUARIO_PERSONA" Member="USUARIO" ThisKey="ID_USU" OtherKey="ID_USU" Type="USUARIO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PRESENTACION" Member="PRESENTACION">
+    <Type Name="PRESENTACION">
+      <Column Name="ID_PRE" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DES_PRE" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="PRESENTACION_MEDICAMENTO" Member="MEDICAMENTO" ThisKey="ID_PRE" OtherKey="ID_PRE" Type="MEDICAMENTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PROMOCION" Member="PROMOCION">
+    <Type Name="PROMOCION">
+      <Column Name="ID_PRO" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_MED" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_FAR" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DES_PRO" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Association Name="MEDICAMENTO_PROMOCION" Member="MEDICAMENTO" ThisKey="ID_MED" OtherKey="ID_MED" Type="MEDICAMENTO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SINTOMA" Member="SINTOMA">
+    <Type Name="SINTOMA">
+      <Column Name="ID_SIN" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DES_SIN" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="SINTOMA_MEDICAMENTO" Member="MEDICAMENTO" ThisKey="ID_SIN" OtherKey="ID_SIN" Type="MEDICAMENTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.USUARIO" Member="USUARIO">
+    <Type Name="USUARIO">
+      <Column Name="ID_USU" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NOM_USU" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="PASS_USU" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="CORREO_USU" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Association Name="USUARIO_PERSONA" Member="PERSONA" ThisKey="ID_USU" OtherKey="ID_USU" Type="PERSONA" />
+      <Association Name="USUARIO_FAVORITO" Member="FAVORITO" ThisKey="ID_USU" OtherKey="ID_USU" Type="FAVORITO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ADVERTENCIA" Member="ADVERTENCIA">
+    <Type Name="ADVERTENCIA">
+      <Column Name="ID_ADV" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DES_ADV" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Association Name="ADVERTENCIA_MEDICAMENTO" Member="MEDICAMENTO" ThisKey="ID_ADV" OtherKey="ID_ADV" Type="MEDICAMENTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DISTRITO" Member="DISTRITO">
+    <Type Name="DISTRITO">
+      <Column Name="ID_DIS" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DES_DIS" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FAVORITO" Member="FAVORITO">
+    <Type Name="FAVORITO">
+      <Column Name="ID_FAV" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ID_MED" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ID_USU" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MEDICAMENTO_FAVORITO" Member="MEDICAMENTO" ThisKey="ID_MED" OtherKey="ID_MED" Type="MEDICAMENTO" IsForeignKey="true" />
+      <Association Name="USUARIO_FAVORITO" Member="USUARIO" ThisKey="ID_USU" OtherKey="ID_USU" Type="USUARIO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FORMA_USO" Member="FORMA_USO">
+    <Type Name="FORMA_USO">
+      <Column Name="ID_FOR" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DES_FOR" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Association Name="FORMA_USO_MEDICAMENTO" Member="MEDICAMENTO" ThisKey="ID_FOR" OtherKey="ID_FOR" Type="MEDICAMENTO" />
+    </Type>
+  </Table>
+</Database>
